@@ -1,10 +1,23 @@
+"""
+Contains the CLI Generator
+"""
 from prettytable import PrettyTable
 
 
-class CliResultGenerator:
+class CliResultGenerator: #pylint: disable=too-few-public-methods
+    """
+    Takes the payment/interest data and generates the CLI output.
+    """
     @staticmethod
     def generate(data):
-        t = PrettyTable(['Month', 'Year', 'Payments', 'Total', 'Interest', 'Total Interest', 'Interest ratio'], float_format='.2')
-        for d in data:
-            t.add_row([d['month'], d['year'], d['invested'], d['net_worth'], d['interest'], d['total_interest'], d['interest_ratio']])
-        print(t)
+        """
+        Generats and prints CLI outpus
+        :param data: Monthly payment data
+        """
+        pretty_table = PrettyTable(['Month', 'Year', 'Payments', 'Total', 'Interest',
+                                    'Total Interest', 'Interest ratio'], float_format='.2')
+        for datum in data:
+            pretty_table.add_row([datum['month'], datum['year'], datum['invested'],
+                                  datum['net_worth'], datum['interest'], datum['total_interest'],
+                                  datum['interest_ratio']])
+        print(pretty_table)
