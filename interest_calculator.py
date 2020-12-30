@@ -33,7 +33,7 @@ if __name__ == "__main__":
     parser.add_argument('--initial_amount', type=float, default=0, help='Initial net worth.')
     parser.add_argument('--monthly_savings', type=float, default=0,
                         help='The amount that\'s being put aside every month.')
-    parser.add_argument('--expected_interest_rate', type=float, default=0,
+    parser.add_argument('--interest_rate', type=float, default=0,
                         help='The annual interest rate you expect in percent.')
     parser.add_argument('--months', type=int, default=12,
                         help='Number of months the interest rate is calculated for')
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     parser.add_argument('--output', type=str, choices=['cli'], default='cli')
     args = parser.parse_args()
 
-    result = calculate_rows(args.initial_amount, args.monthly_savings, args.expected_interest_rate, args.months,
+    result = calculate_rows(args.initial_amount, args.monthly_savings, args.interest_rate, args.months,
                             args.interest_payment)
     if args.output == 'cli':
         CliResultGenerator.generate(result)
