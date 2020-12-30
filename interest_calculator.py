@@ -1,10 +1,22 @@
+"""
+Calculate interest payments and total amounts for loans and saving plans
+"""
+
 import argparse
 import math
 from result_generators.cli_result_generator import CliResultGenerator
 
-
-def calculate_rows(initial_net_worth: float, monthly_saving: float, interest_rate: float, months: int,
-                   interest_payment: str):
+def calculate_rows(initial_net_worth: float, monthly_saving: float, interest_rate: float,
+                   months: int, interest_payment: str):
+    """
+    Creates a generator for all payment information per month
+    :param initial_net_worth: Initial investment or total loan amount
+    :param monthly_saving: Monthly payments.
+    :param interest_rate: Interest rate of the loan or the savings plan
+    :param months: Number of months to run the calculation for.
+    :param interest_payment: The way how interest is calculated.
+    :return: A generator for each month.
+    """
     if interest_payment == 'continuous':
         monthly_interest = math.pow(1 + interest_rate / 100, 1.0 / 12.0) - 1
     elif interest_payment == 'monthly':
@@ -25,7 +37,9 @@ def calculate_rows(initial_net_worth: float, monthly_saving: float, interest_rat
         interest_ratio = 'NaN' if current_net_worth == 0 else total_interest / current_net_worth
 
         yield {'month': month + 1, 'year': int(month / 12) + 1, 'invested': total_payments,
-               'net_worth': current_net_worth, 'interest': interest,'total_interest': total_interest, 'interest_ratio': interest_ratio}
+               'net_worth': current_net_worth, 'interest': interest,
+               'total_interest': total_interest,
+               'interest_ratio': interest_ratio}
 
 
 if __name__ == "__main__":
@@ -37,12 +51,13 @@ if __name__ == "__main__":
                         help='The annual interest rate you expect in percent.')
     parser.add_argument('--months', type=int, default=12,
                         help='Number of months the interest rate is calculated for')
-    parser.add_argument('--interest_payment', type=str, choices=['continuous', 'monthly'], default='continuous')
+    parser.add_argument('--interest_payment', type=str, choices=['continuous', 'monthly'],
+                        default='continuous')
     parser.add_argument('--output', type=str, choices=['cli'], default='cli')
     args = parser.parse_args()
 
-    result = calculate_rows(args.initial_amount, args.monthly_savings, args.interest_rate, args.months,
-                            args.interest_payment)
+    result = calculate_rows(args.initial_amount, args.monthly_savings, args.interest_rate,
+                            args.months, args.interest_payment)
     if args.output == 'cli':
         CliResultGenerator.generate(result)
     else:
