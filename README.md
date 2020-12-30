@@ -1,5 +1,4 @@
-![Pylint](https://github.com/gromlin2/SavingsCalculator/workflows/Pylint/badge.svg?event=pull_request)
-
+![Pylint](https://github.com/gromlin2/SavingsCalculator/workflows/Pylint/badge.svg)
 # SavingsCalculator
 A simple python script to calculate savings and interest
 
