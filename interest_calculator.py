@@ -6,22 +6,26 @@ from result_generators.cli_result_generator import CliResultGenerator
 def calculate_rows(initial_net_worth: float, monthly_saving: float, interest_rate: float, months: int,
                    interest_payment: str):
     if interest_payment == 'continuous':
-        monthly_interest = math.pow(1 + interest_rate / 100, 1.0 / 12.0)
+        monthly_interest = math.pow(1 + interest_rate / 100, 1.0 / 12.0) - 1
     elif interest_payment == 'monthly':
-        monthly_interest = 1 + interest_rate / (12 * 100)
+        monthly_interest = interest_rate / (12 * 100)
     else:
         raise NotImplementedError
 
-    current_investment = initial_net_worth
+    total_payments = initial_net_worth if initial_net_worth > 0 else 0
     current_net_worth = initial_net_worth
-    for month in range(1, months):
-        current_investment = current_investment + monthly_saving
-        current_net_worth = current_net_worth * monthly_interest + monthly_saving
-        interest = current_net_worth - current_investment
-        interest_ratio = interest / current_net_worth
+    total_interest = 0
+    for month in range(0, months):
+        total_payments = total_payments + monthly_saving
 
-        yield {'month': month, 'year': int(month / 12), 'invested': current_investment,
-               'net_worth': current_net_worth, 'interest': interest, 'interest_ratio': interest_ratio}
+        interest = current_net_worth * monthly_interest
+        current_net_worth = current_net_worth + interest + monthly_saving
+
+        total_interest = total_interest + interest
+        interest_ratio = 'NaN' if current_net_worth == 0 else total_interest / current_net_worth
+
+        yield {'month': month + 1, 'year': int(month / 12) + 1, 'invested': total_payments,
+               'net_worth': current_net_worth, 'interest': interest,'total_interest': total_interest, 'interest_ratio': interest_ratio}
 
 
 if __name__ == "__main__":
