@@ -3,7 +3,7 @@ import unittest
 import interest_calculator
 
 
-class TestCases(unittest.TestCase):
+class TestCalculator(unittest.TestCase):
     def test_continuous(self):
         rows = interest_calculator.calculate_rows(5000, 150, 3, 7 * 12, 'continuous')
         lastnetworth = None
