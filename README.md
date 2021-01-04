@@ -28,4 +28,6 @@ Those are:
 
 ```--interest_payment```: Whether interest is added monthly or continously. Stocks grow continously, while other savings plans may pay monthly. (Default: continous)
 
-```--output```: Currently, only output to the CLI is supported. (Default: cli)
+```--output_format```: Weather the output is in form of an ASCII table (ascii_table) or html. (Default: ascii_table)
+
+```--output```: Output file for the result. If not provided, the result will be printed to CLI.
