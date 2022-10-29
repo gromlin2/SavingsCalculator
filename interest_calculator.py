@@ -72,8 +72,7 @@ if __name__ == "__main__":
         raise NotImplementedError
 
     if args.output:
-        f = open(args.output, 'w')
-        f.write(RESULT_STRING)
-        f.close()
+        with open(args.output, "w", encoding="utf-8") as f:
+            f.write(RESULT_STRING)
     else:
         print(RESULT_STRING)
